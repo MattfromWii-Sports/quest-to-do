@@ -1,3 +1,4 @@
 import './styles.css';
+import menu from './images/menu.svg';
 
-console.log('working...');
+console.log(menu);

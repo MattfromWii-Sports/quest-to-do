@@ -4,6 +4,7 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 html {
+    font-size: 14px;
     --header-clr: red;
     --side-clr: blue;
     --main-clr: green;
@@ -23,6 +24,19 @@ body {
     grid-row: 1 / 2;
     height: 5rem;
     background-color: var(--header-clr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+.hamburger-icon {
+    height: 110%;
+    width: auto;
+}
+.header > h1 {
+    font-weight: bold;
+    font-size: 2.5rem;
 }
 
 .side {
