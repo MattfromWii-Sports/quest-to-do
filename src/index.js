@@ -5,17 +5,20 @@ console.log(menu);
 
 //for hamburger icon logic
 const hamburgerIcon = document.querySelector('.hamburger-icon');
-let hamburgerToggle = false;
+const sideBar = document.querySelector('.side');
+let hamburgerOpen = true;
 hamburgerIcon.addEventListener('click', () => {
     let mobileWidth = 700; //remember to match it with css media queries
-    if(window.innerWidth >=  700) {
+    if(window.innerWidth >=  mobileWidth) {
         return; //not mobile :(
     }
-    if(hamburgerToggle === true) {
+    if(hamburgerOpen === true) {
         hamburgerIcon.classList.remove('open');
-        hamburgerToggle = false;
+        sideBar.classList.remove('open');
+        hamburgerOpen = false;
     } else {
         hamburgerIcon.classList.add('open');
-        hamburgerToggle = true;
+        sideBar.classList.add('open');
+        hamburgerOpen = true;
     }
 });

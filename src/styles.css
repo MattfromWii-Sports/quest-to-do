@@ -33,12 +33,6 @@ body {
 .hamburger-icon {
     height: 100%;
     width: auto;
-    transform: rotate(0deg);
-    transition: transform;
-    transition-duration: 0.4s;
-}
-.hamburger-icon.open {
-    transform: rotate(90deg);
 }
 .header > h1 {
     font-weight: bold;
@@ -49,6 +43,7 @@ body {
     grid-column: 1 / 2;
     grid-row: 2 / -1;
     background-color: var(--side-clr);
+    box-sizing: border-box;
 }
 
 .main {
@@ -65,10 +60,25 @@ body {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
     }
+
+    .hamburger-icon {
+        transform: rotate(0deg);
+        transition: transform;
+        transition-duration: 0.4s;
+    }
+    .hamburger-icon.open {
+        transform: rotate(90deg);
+    }
+
     .side {
         grid-row: 2 / 3;
         padding: 30px;
+        display: none;
     }
+    .side.open {
+        display: block;
+    }
+
     .main {
         grid-row: 3 / 4;
         grid-column: 1 / -1;
