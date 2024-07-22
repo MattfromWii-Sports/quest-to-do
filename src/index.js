@@ -4,6 +4,7 @@ import menu from './images/menu.svg';
 console.log(menu);
 
 //for hamburger icon logic
+//please remember: only OPENS/CLOSES on SMALLER widthc
 const hamburgerIcon = document.querySelector('.hamburger-icon');
 const sideBar = document.querySelector('.side');
 let hamburgerOpen = true;
@@ -21,4 +22,5 @@ hamburgerIcon.addEventListener('click', () => {
         sideBar.classList.add('open');
         hamburgerOpen = true;
     }
+    console.log('hamburger: ' + hamburgerOpen);
 });

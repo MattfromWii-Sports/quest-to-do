@@ -45,6 +45,22 @@ body {
     background-color: var(--side-clr);
     box-sizing: border-box;
 }
+.side ol {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 30px 20px;
+}
+.side li {
+    font-size: 2rem;
+    font-weight: bold;
+    list-style-type: none;
+    cursor: pointer;
+    padding: 2px;
+}
+.side li:hover {
+    background-color: aqua;
+}
 
 .main {
     grid-column: 2 / -1;
@@ -63,8 +79,7 @@ body {
 
     .hamburger-icon {
         transform: rotate(0deg);
-        transition: transform;
-        transition-duration: 0.4s;
+        transition: transform 0.3s ease-in-out;
     }
     .hamburger-icon.open {
         transform: rotate(90deg);
@@ -72,7 +87,6 @@ body {
 
     .side {
         grid-row: 2 / 3;
-        padding: 30px;
         display: none;
     }
     .side.open {
