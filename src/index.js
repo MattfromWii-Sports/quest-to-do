@@ -1,10 +1,11 @@
 import './styles.css';
 import menu from './images/menu.svg';
 
-console.log(menu);
+console.log(working);
+
 
 //for hamburger icon logic
-//please remember: only OPENS/CLOSES on SMALLER widthc
+//please remember: only OPENS/CLOSES on SMALLER width
 const hamburgerIcon = document.querySelector('.hamburger-icon');
 const sideBar = document.querySelector('.side');
 let hamburgerOpen = true;
