@@ -8,4 +8,8 @@ A To-Do website with a gamified twist. It will implement rpg quest like function
 * Have a main/home interface to see all the pending quests
 
 ### I must be able to implement:
-* A linked list type class for questlines
+* A linked list type class for questlines (changed to arrays for simplicity)
+
+## TO DO
+* Add a color palette (thematic)
+* Find a way to store and manage the array holding the data
