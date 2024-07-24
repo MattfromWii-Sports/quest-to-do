@@ -1,19 +1,25 @@
 
-function renderHome() {
+function renderHome(todoArray) {
 
 }
 
-function renderQuestlines() {
+function renderQuestlines(todoArray) {
 
 }
+
+function renderSettings() {
+
+}
+
+//helper functions
+
 //builds questline divs
 function buildQuestline(questlineObj) {
 
 }
-
-
-function renderSettings() {
-
+//builds add button
+function buildAddButton() {
+    
 }
 
 export {renderHome, renderQuestlines, renderSettings};

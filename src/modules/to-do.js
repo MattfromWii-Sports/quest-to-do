@@ -1,15 +1,8 @@
-class todo {
-    constructor(content) {
-        
-    }
-}
-
 //individual tasks
 class quest {
     constructor(title, description) {
         this.title = title;
         this.description = description;
-        //if true --> done
         this.isCompleted = false; 
     }
     //updates content of quest
@@ -42,3 +35,21 @@ class questline {
 
     }
 }
+
+//main class
+class todo {
+    constructor(content) {
+        this.content = content;
+    }
+    //always adds new at index 0
+    addQuestline(questlineObj) {
+
+    }
+    //takes index of questline
+    //then adds to questline using its class function
+    addQuestToQuestline(index, questObj) {
+
+    }
+}
+
+export {todo};

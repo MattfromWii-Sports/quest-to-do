@@ -1,8 +1,9 @@
 import './styles.css';
 import menu from './images/menu.svg';
+import {todo} from './modules/to-do';
 
-console.log(working);
-
+const x = new todo([{}, {}]);
+console.log(x);
 
 //for hamburger icon logic
 //please remember: only OPENS/CLOSES on SMALLER width
