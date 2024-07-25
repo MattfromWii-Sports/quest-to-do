@@ -40,6 +40,7 @@ class Questline {
         }
 
         this.storage[tierIndex].unshift(questObj);
+        this.count += 1;
         return this.storage[tierIndex][0]; //for checking purposes
     }
 
@@ -49,6 +50,7 @@ class Questline {
         if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
             return false;
         }
+        this.count -= 1;
         //remove element
         return this.storage[tierIndex].splice(specificIndex, 1);
     }
@@ -106,6 +108,8 @@ class Questline {
             this.storage[tierIndex - 1].push(this.storage[tierIndex][specificIndex]);
             //remove the duplicate
             this.removeAtIndices(tierIndex, specificIndex);
+            //counteract the decrease of 1 from remove function, add 1
+            this.count += 1;
 
             //lastly check if original tier is empty -> if so remove it
             this.removeTierIfEmpty(tierIndex);
@@ -117,6 +121,13 @@ class Questline {
         //specificIndex - 1 : swap with previous place 
         this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex - 1);
         return true;
+    }
+
+    //updates details
+    updateAll(title, description, color) {
+        this.title = title;
+        this.description = description;
+        this.color = color;
     }
 
     //helper functions
@@ -166,14 +177,18 @@ const test = () => {
     const x = new Questline('a', 'b', 'c');
 
     x.addToTier(0, 'sda');
+    x.addToTier(0, 'day');
+    x.addToTier(0, 'night');
     x.printAtTier(0);
 
-    x.moveIndexUp(0, 0);
+    console.log(x.count);
+    x.moveIndexDown(0, 2);
 
     x.printAtTier(0);
     x.printAtTier(1);
 
     console.log(x);
+    console.log(x.count);
 }
 
 export {Quest, Questline, test};
