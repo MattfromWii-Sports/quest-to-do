@@ -26,90 +26,138 @@ class Questline {
         //where quests will be stored
         this.storage = [];
     }
-    //adds to specific tier index
+
+    //adds element to specific tier index
     //it will always be put at front, index 0
-    addToIndex(tierIndex, questObj) {
+    addToTier(tierIndex, questObj) {
         //when questline content[] is empty
         if(tierIndex === 0 && this.storage.length === 0) {
             this.storage.push([]);
         }
         //checks if tierIndex valid
         if(tierIndex >= this.storage.length) {
-            return 0;
+            return false;
         }
+
         this.storage[tierIndex].unshift(questObj);
         return this.storage[tierIndex][0]; //for checking purposes
     }
-    removeAtIndex(tierIndex, specificIndex) {
+
+    //removes element at specific indices
+    removeAtIndices(tierIndex, specificIndex) {
         //check if tierIndex & specificIndex are valid
-        if(tierIndex >= this.storage.length || specificIndex >= this.storage[tierIndex].length) {
-            return 0;
+        if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
+            return false;
         }
         //remove element
         return this.storage[tierIndex].splice(specificIndex, 1);
     }
 
+    //moves element at indices to next place/tier
     moveIndexDown(tierIndex, specificIndex) {
-        //check if tierIndex & specificIndex are valid
-        if(tierIndex >= this.storage.length || specificIndex >= this.storage[tierIndex].length) {
-            return 0;
+        //check if tierIndex & specificIndex exist
+        if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
+            return false;
         }
+
         //first check if specificIndex is at the end
         //if so, need to move it to next tier
-        if(specificIndex === this.storage[tierIndex].length - 1) {
+        if(specificIndex === this.tierSize(tierIndex) - 1) {
             //check if next tierIndex is present already
             if(tierIndex + 1 >= this.storage.length) {
                 this.storage.push([]);
             }
-            //tierIndex + 1 : next tier
-            //0 : first 
-            this.swapIndices(tierIndex, specificIndex, tierIndex + 1, 0);
-            //if the next tier is empty -> undefined will be swapped, must be removed
-            if(this.storage[tierIndex][specificIndex] === undefined) {
-                this.removeAtIndex(tierIndex, specificIndex);
-            }
-            return 1;
+
+            //get the element and add to start next tier
+            this.addToTier(tierIndex + 1, this.storage[tierIndex][specificIndex]);
+            //remove the duplicate
+            this.removeAtIndices(tierIndex, specificIndex);
+
+            //lastly check if original tier is empty -> if so remove it
+            this.removeTierIfEmpty(tierIndex);
+
+            return true;
         }
+
         //if specificIndex is not at the end -> swap within tier (tierIndex stays same)
         //specificIndex + 1 : swap with next place 
         this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex + 1);
-        return 1;
+        return true;
     }
+
+    //moves element at indices to previous place/tier
     moveIndexUp(tierIndex, specificIndex) {
-        //check if tierIndex & specificIndex are valid
-        if(tierIndex >= this.storage.length || specificIndex >= this.storage[tierIndex].length) {
-            return 0;
+        //check if tierIndex & specificIndex exist
+        if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
+            return false;
         }
 
-        //NEED TO FIX TOMMOROW (APPLY LOGIC TO THIS)
-
-        //check if specificIndex is at the start
+        //first check if specificIndex is at the start
         //if so, need to move it to previous tier
-        if(specificIndex === this.storage[tierIndex].length - 1) {
-            //check if next tierIndex is present already
-            if(tierIndex + 1 >= this.storage.length) {
-                this.storage.push([]);
+        if(specificIndex === 0) {
+            //check if tierIndex is at 0 (start) -> need to make new array
+            if(tierIndex === 0) {
+                this.storage.unshift([]);
+                tierIndex += 1; //need to shift it by 1, since new array inserted at start
             }
-            //tierIndex + 1 : next tier
-            //0 : first 
-            this.swapIndices(tierIndex, specificIndex, tierIndex + 1, 0);
-            //if the next tier is empty -> undefined will be swapped, must be removed
-            if(this.storage[tierIndex][specificIndex] === undefined) {
-                this.removeAtIndex(tierIndex, specificIndex);
-            }
-            return 1;
+
+            //get the element and add to previous tier
+            //uses push to add to last position instead of first (addToTier)
+            this.storage[tierIndex - 1].push(this.storage[tierIndex][specificIndex]);
+            //remove the duplicate
+            this.removeAtIndices(tierIndex, specificIndex);
+
+            //lastly check if original tier is empty -> if so remove it
+            this.removeTierIfEmpty(tierIndex);
+
+            return true;
         }
-        //if specificIndex is not at the end -> swap within tier (tierIndex stays same)
-        //specificIndex + 1 : swap with next place 
-        this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex + 1);
-        return 1;
+
+        //if specificIndex is not at the start -> swap within tier (tierIndex stays same)
+        //specificIndex - 1 : swap with previous place 
+        this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex - 1);
+        return true;
     }
 
     //helper functions
+
+    //gets storage length (number of tiers)
+    getNumberOfTiers() {
+        return this.storage.length;
+    }
+    //gets tier length (number of elements in tier)
+    tierSize(tierIndex) {
+        if(tierIndex >= this.getNumberOfTiers()) {
+            return false;
+        }
+        return this.storage[tierIndex].length;
+    }
+
+    //swaps two sets of indices 
     swapIndices(tierIndex1, index1, tierIndex2, index2) {
         const temp = this.storage[tierIndex1][index1]
         this.storage[tierIndex1][index1] = this.storage[tierIndex2][index2];
         this.storage[tierIndex2][index2] = temp;
+    }
+    //removes tier
+    removeTierIfEmpty(tierIndex) {
+        if(this.storage[tierIndex].length === 0) {
+            this.storage.splice(tierIndex, 1);
+            return true;
+        } 
+        return false;
+    }
+
+    //prints elements at a tier (for debugging purposes)
+    printAtTier(tierIndex) {
+        if(tierIndex >= this.getNumberOfTiers()) {
+            return 'Invalid Tier Index';
+        }
+        let x = '';
+        for(let i = 0; i < this.tierSize(tierIndex); i++) {
+            x += this.storage[tierIndex][i] + ', ';
+        }
+        console.log(x);
     }
 }
 
@@ -117,15 +165,15 @@ class Questline {
 const test = () => {
     const x = new Questline('a', 'b', 'c');
 
-    x.addToIndex(0, 'sda');
-    x.addToIndex(0, 'ffff');
-    console.log(x.storage[0]);
+    x.addToTier(0, 'sda');
+    x.printAtTier(0);
 
-    // x.moveIndexDown(0, 1);
-    x.moveIndexDown(0, 0);
-    x.moveIndexDown(0, 1);
-    
-    console.log(x.storage);
+    x.moveIndexUp(0, 0);
+
+    x.printAtTier(0);
+    x.printAtTier(1);
+
+    console.log(x);
 }
 
 export {Quest, Questline, test};
