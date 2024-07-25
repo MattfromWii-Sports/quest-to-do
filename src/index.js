@@ -1,6 +1,8 @@
 import './styles.css';
 import menu from './images/menu.svg';
-import {Todo, test} from './modules/to-do.js';
+import {Todo} from './modules/to-do.js';
+// for testing purposes
+import {test} from './modules/quest-component.js';
 
 const t = new Todo([{}, {}]);
 test();
