@@ -19,6 +19,10 @@ function buildQuestline(questlineObj) {
 }
 //builds add button
 function buildAddButton() {
+
+}
+//builds tier line separator
+function buildLine() {
     
 }
 

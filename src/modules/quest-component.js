@@ -10,9 +10,9 @@ class Quest {
         this.title = title;
         this.description = description;
     }
-    //updates completion status
-    updateCompleted(booleanVal) {
-        this.isCompleted = booleanVal;
+    //toggles completion status from false to true & vice versa
+    toggleCompleted() {
+        this.isCompleted = (this.isCompleted === true) ? false : true;
     }
 }
 
@@ -172,23 +172,4 @@ class Questline {
     }
 }
 
-//testing
-const test = () => {
-    const x = new Questline('a', 'b', 'c');
-
-    x.addToTier(0, 'sda');
-    x.addToTier(0, 'day');
-    x.addToTier(0, 'night');
-    x.printAtTier(0);
-
-    console.log(x.count);
-    x.moveIndexDown(0, 2);
-
-    x.printAtTier(0);
-    x.printAtTier(1);
-
-    console.log(x);
-    console.log(x.count);
-}
-
-export {Quest, Questline, test};
+export {Quest, Questline};
