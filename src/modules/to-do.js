@@ -10,7 +10,6 @@ class Todo {
     createNewQuestline(title, description, color) {
         this.content.push(new Questline(title, description, color));
     }
-
     //removes questline at index
     removeQuestline(index) {
         if(index >= this.content.length) {
@@ -27,7 +26,6 @@ class Todo {
         }
         return this.content[index].addToTier(tierIndex, questObj);
     }
-
     //removes quest from specific questline
     removeFromQuestline(index, tierIndex, specificIndex) {
         if(index >= this.content.length) {
@@ -43,7 +41,6 @@ class Todo {
         }
         return this.content[index].moveIndexDown(tierIndex, specificIndex);
     }
-
     //moves quest position up 
     moveUp(index, tierIndex, specificIndex) {
         if(index >= this.content.length) {
@@ -53,12 +50,22 @@ class Todo {
     }
 
     //updates quest details
-    updateQuestDetails() {
-
+    updateQuestDetails(index, tierIndex, specificIndex, title, description) {
+        const currentQl = this.content[index];
+        if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
+            return 'false';
+        }
+        currentQl.atTierIndex(tierIndex, specificIndex).updateAll(title, description);
+        return true;
     }
     //updates quest status
-    updateQuestStatus() {
-        
+    toggleQuestStatus(index, tierIndex, specificIndex) {
+        const currentQl = this.content[index];
+        if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
+            return 'false';
+        }
+        currentQl.atTierIndex(tierIndex, specificIndex).toggleCompleted();
+        return true;
     }
 
 }
@@ -68,11 +75,13 @@ const test = () => {
     const x = new Todo([]);
 
     x.createNewQuestline('title', '...', 'dhfaks');
-    x.createNewQuestline('sdasdahjs', '...', 'dhfaks');
-    x.addToQuestline(0, 0, 'first');
-    x.addToQuestline(0, 0, 'second');
+    x.addToQuestline(0, 0, new Quest('title1', 'desc1'));
+    x.addToQuestline(0, 0, new Quest('title2', 'desc2'));
     x.moveDown(0, 0, 1);
-
+    console.log(x.content);
+    x.updateQuestDetails(0, 0, 0, 'new title', 'new desc');
+    x.toggleQuestStatus(0, 0, 0);
+    
     console.log(x.content);
 }
 

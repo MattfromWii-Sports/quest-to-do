@@ -130,6 +130,14 @@ class Questline {
         this.color = color;
     }
 
+    //selects quest
+    atTierIndex(tierIndex, specificIndex) {
+        if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
+            return false;
+        }
+        return this.storage[tierIndex][specificIndex];
+    }
+
     //helper functions
 
     //gets storage length (number of tiers)
