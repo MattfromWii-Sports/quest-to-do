@@ -5,9 +5,9 @@
 }
 html {
     font-size: 14px;
-    --header-clr: red;
-    --side-clr: blue;
-    --main-clr: green;
+    --header-clr: #ffffff;;
+    --side-clr: #ffffff;;
+    --main-clr: #ffffff;
 }
 
 body {
@@ -29,6 +29,7 @@ body {
     align-items: center;
     padding: 10px 16px;
     box-sizing: border-box;
+    border-bottom: 5px solid black;
 }
 .hamburger-icon {
     height: 100%;
@@ -45,19 +46,22 @@ body {
     background-color: var(--side-clr);
     box-sizing: border-box;
     width: auto;
+    border-right: 5px solid black;
+    padding: 40px 0;
 }
 .side ol {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 30px 0;
 }
 .side li {
     font-size: 2rem;
     font-weight: bold;
     list-style-type: none;
     cursor: pointer;
-    padding: 2px 40px 2px 25px;
+    padding: 2px 5rem 2px 26px;
+    width: 100%;
+    box-sizing: border-box;
 }
 .side li:hover {
     background-color: aqua;
@@ -101,6 +105,9 @@ body {
     .side {
         grid-row: 2 / 3;
         display: none;
+        border-bottom: 5px solid black;
+        border-right: 0;
+        padding: 20px 0;
     }
     .side.open {
         display: block;
@@ -111,3 +118,5 @@ body {
         grid-column: 1 / -1;
     }
 }
+
+/* https://coolors.co/palette/fffffa-0d5c63-44a1a0-78cdd7-247b7b */
