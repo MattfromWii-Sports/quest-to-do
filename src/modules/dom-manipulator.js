@@ -1,3 +1,11 @@
+import menuImg from '../images/menu.svg'
+
+//loads images that will stay in the dom
+function loadPreImages() {
+    const hamburger = document.querySelector('.hamburger-icon');
+    hamburger.src = menuImg;
+}
+
 
 function renderHome(todoArray) {
 
@@ -23,7 +31,7 @@ function buildAddButton() {
 }
 //builds tier line separator
 function buildLine() {
-    
+
 }
 
-export {renderHome, renderQuestlines, renderSettings};
+export {loadPreImages, renderHome, renderQuestlines, renderSettings};

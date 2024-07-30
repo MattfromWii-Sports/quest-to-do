@@ -1,5 +1,6 @@
 import './styles.css';
 import {Todo, test} from './modules/to-do.js';
+import {loadPreImages} from './modules/dom-manipulator.js'
 
 const t = new Todo([{}, {}]);
 test();
@@ -25,3 +26,6 @@ hamburgerIcon.addEventListener('click', () => {
     }
     console.log('hamburger: ' + hamburgerOpen);
 });
+
+//load this first
+loadPreImages();
