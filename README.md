@@ -12,4 +12,7 @@ A To-Do website with a gamified twist. It will implement rpg quest like function
 
 ## TO DO
 * Add a color palette (thematic)
-* Find a way to store and manage the array holding the data
+* Add an archive tab
+* Add a settings tab
+* Add a view tab
+* Add an archive variable to the Questline Class

@@ -19,8 +19,11 @@ function renderQuestlines(todoArray) {
     mainDiv.appendChild(buildAddButton());
     //questlines
     for(let i = 0; i < todoArray.length; i++) {
-        mainDiv.appendChild(buildQuestlineCard(todoArray[i]));
+        const questline = buildQuestlineCard(todoArray[i]);
+        questline.dataset.todoIndex = i;
+        mainDiv.appendChild(questline);
     }
+    addQuestlineListeners();
 }
 
 function renderSettings() {
@@ -31,6 +34,7 @@ function renderSettings() {
 
 function clear(div) {
     div.innerHTML = '';
+    removeQuestlineListeners();
 }
 
 //__NEED TO ADD DATA VALUES LATER__
@@ -103,6 +107,34 @@ function buildAddButton() {
 //builds tier line separator
 function buildLine() {
 
+}
+
+//event listeners
+function questlineEvents(e) {
+    const target = e.target;
+    if(target.classList.contains('move-btn')) {
+        console.log('move');
+    } else if(target.classList.contains('edit-btn')) {
+        console.log('edit');
+    } else if(target.classList.contains('delete-btn')) {
+        console.log('delete');
+    } else {
+        //open questline
+        console.log('open');
+    }
+}
+function addQuestlineListeners() {
+    const allQuestlines = document.querySelectorAll('.questline-container');
+    allQuestlines.forEach((q) => {
+        q.addEventListener('click', questlineEvents);
+    });
+}
+//i'm not sure if this is necessary or not? but just to be safe...
+function removeQuestlineListeners() {
+    const allQuestlines = document.querySelectorAll('.questline-container');
+    allQuestlines.forEach((q) => {
+        q.removeEventListener('click', questlineEvents);
+    });
 }
 
 export {clear, loadPreImages, renderHome, renderQuestlines, renderSettings};
