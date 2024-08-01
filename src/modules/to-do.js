@@ -6,6 +6,13 @@ class Todo {
         this.content = content; //where everything is stored
     }
 
+    atQuestline(index) {
+        if(index >= this.content,length) {
+            return false;
+        }
+        return this.content[index];
+    }
+    
     //always adds at last position
     createNewQuestline(title, description, color) {
         this.content.push(new Questline(title, description, color));
@@ -53,7 +60,7 @@ class Todo {
     updateQuestDetails(index, tierIndex, specificIndex, title, description) {
         const currentQl = this.content[index];
         if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
-            return 'false';
+            return false;
         }
         currentQl.atTierIndex(tierIndex, specificIndex).updateAll(title, description);
         return true;
@@ -62,7 +69,7 @@ class Todo {
     toggleQuestStatus(index, tierIndex, specificIndex) {
         const currentQl = this.content[index];
         if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
-            return 'false';
+            return false;
         }
         currentQl.atTierIndex(tierIndex, specificIndex).toggleCompleted();
         return true;

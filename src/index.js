@@ -1,9 +1,10 @@
 import './styles.css';
 import {Todo, test} from './modules/to-do.js';
-import {loadPreImages} from './modules/dom-manipulator.js'
+import {clear, loadPreImages, renderHome, renderQuestlines, renderSettings} from './modules/dom-manipulator.js'
 
-const t = new Todo([{}, {}]);
-test();
+const todo = new Todo(localStorage.getItem('todo') || []);
+todo.createNewQuestline('title', 'description', 'color1');
+console.log(todo);
 
 //for hamburger icon logic
 //please remember: only OPENS/CLOSES on SMALLER width
@@ -26,6 +27,20 @@ hamburgerIcon.addEventListener('click', () => {
     }
     console.log('hamburger: ' + hamburgerOpen);
 });
+
+//for sidebar buttons
+sideBar.addEventListener('click', (e) => {
+    if(e.target.classList.contains('home')) {
+        console.log('home');
+    } else if(e.target.classList.contains('questlines')) {
+        renderQuestlines(todo.content);
+    } else if(e.target.classList.contains('settings')) {
+        console.log('settings');
+    }
+});
+
+//for listeners in main
+const main = document.querySelector('.main');
 
 //load this first
 loadPreImages();

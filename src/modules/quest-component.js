@@ -14,6 +14,13 @@ class Quest {
     toggleCompleted() {
         this.isCompleted = (this.isCompleted === true) ? false : true;
     }
+
+    getTitle() {
+        return this.title;
+    }
+    getDescription() {
+        return this.description;
+    }
 }
 
 //quests go here
@@ -25,6 +32,19 @@ class Questline {
         this.count = 0; //how many quests are stored
         //where quests will be stored
         this.storage = [];
+    }
+
+    getTitle() {
+        return this.title;
+    }
+    getDescription() {
+        return this.description;
+    }
+    getColor() {
+        return this.color;
+    }
+    getCount() {
+        return this.count;
     }
 
     //adds element to specific tier index
