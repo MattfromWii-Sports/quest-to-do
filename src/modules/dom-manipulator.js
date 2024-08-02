@@ -4,9 +4,24 @@ import kebabImg from '../images/dots-vertical.svg';
 const mainDiv = document.querySelector('.main');
 
 //loads images that will stay in the dom
-function loadPreImages() {
+function loadStaticElements() {
     const hamburger = document.querySelector('.hamburger-icon');
+    const sidebar = document.querySelector('.side');
     hamburger.src = menuImg;
+    //please remember: only OPENS/CLOSES on SMALLER width
+    hamburger.addEventListener('click', () => {
+        let mobileWidth = 700; //remember to match it with css media queries
+        if(window.innerWidth >=  mobileWidth) {
+            return; //not mobile :(
+        }
+        if(hamburger.classList.contains('open')) {
+            hamburger.classList.remove('open');
+            sidebar.classList.remove('open');
+        } else {
+            hamburger.classList.add('open');
+            sidebar.classList.add('open');
+        }
+    });
 }
 
 
@@ -23,7 +38,6 @@ function renderQuestlines(todoArray) {
         questline.dataset.todoIndex = i;
         mainDiv.appendChild(questline);
     }
-    addQuestlineListeners();
 }
 
 function renderSettings() {
@@ -34,7 +48,6 @@ function renderSettings() {
 
 function clear(div) {
     div.innerHTML = '';
-    removeQuestlineListeners();
 }
 
 //__NEED TO ADD DATA VALUES LATER__
@@ -109,32 +122,5 @@ function buildLine() {
 
 }
 
-//event listeners
-function questlineEvents(e) {
-    const target = e.target;
-    if(target.classList.contains('move-btn')) {
-        console.log('move');
-    } else if(target.classList.contains('edit-btn')) {
-        console.log('edit');
-    } else if(target.classList.contains('delete-btn')) {
-        console.log('delete');
-    } else {
-        //open questline
-        console.log('open');
-    }
-}
-function addQuestlineListeners() {
-    const allQuestlines = document.querySelectorAll('.questline-container');
-    allQuestlines.forEach((q) => {
-        q.addEventListener('click', questlineEvents);
-    });
-}
-//i'm not sure if this is necessary or not? but just to be safe...
-function removeQuestlineListeners() {
-    const allQuestlines = document.querySelectorAll('.questline-container');
-    allQuestlines.forEach((q) => {
-        q.removeEventListener('click', questlineEvents);
-    });
-}
 
-export {clear, loadPreImages, renderHome, renderQuestlines, renderSettings};
+export {loadStaticElements, renderHome, renderQuestlines, renderSettings};
