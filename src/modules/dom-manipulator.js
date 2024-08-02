@@ -14,13 +14,8 @@ function loadStaticElements() {
         if(window.innerWidth >=  mobileWidth) {
             return; //not mobile :(
         }
-        if(hamburger.classList.contains('open')) {
-            hamburger.classList.remove('open');
-            sidebar.classList.remove('open');
-        } else {
-            hamburger.classList.add('open');
-            sidebar.classList.add('open');
-        }
+        hamburger.classList.toggle('open');
+        sidebar.classList.toggle('open');
     });
 }
 
@@ -31,13 +26,14 @@ function renderHome(todoArray) {
 
 function renderQuestlines(todoArray) {
     clear(mainDiv);
-    mainDiv.appendChild(buildAddButton());
+    mainDiv.appendChild(buildQuestlineAddButton());
     //questlines
     for(let i = 0; i < todoArray.length; i++) {
         const questline = buildQuestlineCard(todoArray[i]);
         questline.dataset.todoIndex = i;
         mainDiv.appendChild(questline);
     }
+    addQuestlineListeners();
 }
 
 function renderSettings() {
@@ -47,6 +43,7 @@ function renderSettings() {
 //helper functions
 
 function clear(div) {
+    removeQuestlineListeners();
     div.innerHTML = '';
 }
 
@@ -111,16 +108,61 @@ function buildElement(type) {
     return document.createElement(type);
 }
 //builds add button
-function buildAddButton() {
-    const div = document.createElement('button');
-    div.classList.add('add-btn', 'questline');
-    div.textContent = '+ NEW QUESTLINE';
-    return div;
+function buildQuestAddButton() {
+    const button = buildElementClass('button', 'add-btn');
+    button.textContent = '+ NEW QUEST';
+    return button;
+}
+function buildQuestlineAddButton() {
+    const button = buildElementClass('button', 'questline-add-btn');
+    button.textContent = '+ NEW QUESTLINE';
+    return button;
 }
 //builds tier line separator
 function buildLine() {
 
 }
 
+//event listeners
+function questlineEvents(e) {
+    const target = e.target;
+    if(target.classList.contains('move-btn')) {
+        console.log('move');
+    } else if(target.classList.contains('edit-btn')) {
+        console.log('edit');
+    } else if(target.classList.contains('delete-btn')) {
+        console.log('delete');
+    } else if(target.classList.contains('kebab-menu')){  
+        toggleKebabMenu(target);
+    } else {
+        //open questline
+        console.log('open');
+    }
+}
+
+function addQuestlineListeners() {
+    const allQuestlines = document.querySelectorAll('.questline-container');
+    allQuestlines.forEach((q) => {
+        q.addEventListener('click', questlineEvents);
+    });
+}
+//i'm not sure if this is necessary or not? but just to be safe...
+function removeQuestlineListeners() {
+    const allQuestlines = document.querySelectorAll('.questline-container');
+    allQuestlines.forEach((q) => {
+        q.removeEventListener('click', questlineEvents);
+    });
+}
+function toggleKebabMenu(target) {
+    const all = document.querySelectorAll('.kebab-container');
+    // Close all open kebab menus except the one being toggled
+    all.forEach(menu => {
+      if (menu !== target.nextSibling) {
+        menu.classList.remove('open');
+      }
+    });
+    //toggle it
+    target.nextSibling.classList.toggle('open');
+}
 
 export {loadStaticElements, renderHome, renderQuestlines, renderSettings};

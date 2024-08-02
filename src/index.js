@@ -4,6 +4,7 @@ import {loadStaticElements, renderHome, renderQuestlines, renderSettings} from '
 
 const todo = new Todo(localStorage.getItem('todo') || []);
 todo.createNewQuestline('title', 'description', 'color1');
+todo.createNewQuestline('title', 'description', 'color1');
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -18,11 +19,6 @@ sideBar.addEventListener('click', (e) => {
     } else if(e.target.classList.contains('settings')) {
         console.log('settings');
     }
-});
-
-//for elements in main
-main.addEventListener('click', (e) => {
-    
 });
 
 //load this first

@@ -82,6 +82,7 @@ body {
 }
 
 
+.questline-add-btn,
 .add-btn {
     width: 95%;
     font-size: 1.5rem;
@@ -126,7 +127,7 @@ body {
 }
 .kebab-container {
     position: absolute;
-    transform: translateY(-84%);
+    transform: translateY(-85%);
     padding: 4px 2px;
     border: 2px solid black;
     background-color: white;
