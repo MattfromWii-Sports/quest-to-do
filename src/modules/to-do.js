@@ -24,6 +24,16 @@ class Todo {
         }
         return this.content.splice(index, 1);
     }
+    //move questline to top
+    moveQuestline(index) {
+        if(index >= this.content.length) {
+            return false;
+        }
+        let temp = this.content[index];
+        this.removeQuestline(index);
+        this.content.unshift(temp);
+        return true;
+    }
 
     //takes index of questline
     //then adds to questline using its class function (tierIndex involved)

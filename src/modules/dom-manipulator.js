@@ -33,7 +33,6 @@ function renderQuestlines(todoArray) {
         questline.dataset.todoIndex = i;
         mainDiv.appendChild(questline);
     }
-    addQuestlineListeners();
 }
 
 function renderSettings() {
@@ -43,7 +42,6 @@ function renderSettings() {
 //helper functions
 
 function clear(div) {
-    removeQuestlineListeners();
     div.innerHTML = '';
 }
 
@@ -123,36 +121,6 @@ function buildLine() {
 
 }
 
-//event listeners
-function questlineEvents(e) {
-    const target = e.target;
-    if(target.classList.contains('move-btn')) {
-        console.log('move');
-    } else if(target.classList.contains('edit-btn')) {
-        console.log('edit');
-    } else if(target.classList.contains('delete-btn')) {
-        console.log('delete');
-    } else if(target.classList.contains('kebab-menu')){  
-        toggleKebabMenu(target);
-    } else {
-        //open questline
-        console.log('open');
-    }
-}
-
-function addQuestlineListeners() {
-    const allQuestlines = document.querySelectorAll('.questline-container');
-    allQuestlines.forEach((q) => {
-        q.addEventListener('click', questlineEvents);
-    });
-}
-//i'm not sure if this is necessary or not? but just to be safe...
-function removeQuestlineListeners() {
-    const allQuestlines = document.querySelectorAll('.questline-container');
-    allQuestlines.forEach((q) => {
-        q.removeEventListener('click', questlineEvents);
-    });
-}
 function toggleKebabMenu(target) {
     const all = document.querySelectorAll('.kebab-container');
     // Close all open kebab menus except the one being toggled
@@ -164,5 +132,13 @@ function toggleKebabMenu(target) {
     //toggle it
     target.nextSibling.classList.toggle('open');
 }
+function parentUp(target, count) {
+    let i = 0;
+    while(i != count) {
+        target = target.parentNode;
+        i++;
+    }
+    return target;
+}
 
-export {loadStaticElements, renderHome, renderQuestlines, renderSettings};
+export {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp};
