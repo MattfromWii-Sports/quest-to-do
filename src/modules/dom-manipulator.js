@@ -141,4 +141,24 @@ function parentUp(target, count) {
     return target;
 }
 
-export {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp};
+const questlineModal = document.querySelector('#questline-dialog');
+
+function showQuestlineModal(title, description, color) {
+    if(title !== undefined || description !== undefined || color !== undefined) {
+        //do stuff
+    }
+    questlineModal.showModal();
+}
+function closeQuestlineModal() {
+    //reset values first
+    questlineModal.close();
+}
+
+export {loadStaticElements, 
+    renderHome, 
+    renderQuestlines, 
+    renderSettings, 
+    toggleKebabMenu, 
+    parentUp, 
+    showQuestlineModal,
+    closeQuestlineModal};

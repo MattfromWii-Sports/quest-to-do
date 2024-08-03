@@ -19,9 +19,9 @@
             </ol>
         </div>
         <div class="main">
-            <button class="questline-add-btn">+ NEW</button>
 
-            <!-- questline structure draft -->
+            <!-- questline structure draft
+            <button class="questline-add-btn">+ NEW</button>
             <div class="questline-container">
                <div class="questline-top">
                     <h3>TITLE</h3>
@@ -45,9 +45,33 @@
                         </div>
                     </div>
                </div>
-            </div>
- 
+            </div>-->
 
         </div>
+
+        <dialog class="modal" id="questline-dialog">
+            <form class="questline-form">
+                <div class="form-section"> 
+                    <label>TITLE</label>
+                    <input type="text" id="questline-form-title" name="questline-form-title" maxlength="150">
+                </div>
+
+                <div class="form-section">
+                    <label>DESCRIPTION</label>
+                    <textarea type="textarea" id="questline-form-description" name="questline-form-description" rows="4" maxlength="300"></textarea>
+                </div>
+
+                <div class="color-section">
+                    <label for="questline-form-color">COLOR</label>
+                    <input type="color" id="questline-form-color" name="questline-form-color">
+                </div>
+                
+                <div class="buttons">
+                    <button type="button" class="questline-form-cancel-btn">CANCEL</button>
+                    <button type="submit" class="questline-form-submit-btn">SUBMIT</button>
+                </div>
+            </form>
+        </dialog>
+
     </body>
 </html>
