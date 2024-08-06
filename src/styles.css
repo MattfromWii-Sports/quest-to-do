@@ -107,10 +107,13 @@ body {
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid black;
+    gap: 10px;
 }
 .questline-top h3 {
     font-size: 1.8rem;
     text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
 }
 .questline-top .buttons {
     display: flex;
