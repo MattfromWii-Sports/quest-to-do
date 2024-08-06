@@ -15,8 +15,8 @@ html {
 }
 
 body {
-    min-width: 100vw;
-    min-height: 100svh;
+    width: 100vw;
+    height: 100svh;
     overflow-y: hidden;
     display: grid;
     grid-template-columns: auto repeat(3, 1fr);
@@ -78,7 +78,9 @@ body {
     align-items: center;
     justify-content: flex-start;
     gap: 25px;
-    padding: 60px 20px;
+    padding: 50px 20px;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 

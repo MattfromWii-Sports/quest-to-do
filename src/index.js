@@ -40,10 +40,12 @@ function questlineEvents(e) {
     const target = e.target;
 
     if(targetClass.contains('main')) {
+        closeKebabMenu(); //close open kebab menus
         return; //nothing happens
     }
 
     if(targetClass.contains('questline-add-btn')) {
+        currentQuestlineIndex = null;
         showQuestlineModal();
         console.log('new ql');
 
@@ -69,7 +71,6 @@ function questlineEvents(e) {
     } else { //works since main click accounted for
         console.log('open ql');
     }
-    
 }
 
 const questlineForm = document.querySelector('.questline-form');
@@ -81,7 +82,12 @@ questlineForm.addEventListener('click', e => {
     } else if(e.target.classList.contains('questline-form-submit-btn')) { 
         e.preventDefault();
         const values = getQuestlineModal();
-        todo.atQuestline(currentQuestlineIndex).updateAll(values.title, values.description, values.color); //add here
+        if(currentQuestlineIndex === null) { //create new questline
+            todo.createNewQuestline(values.title, values.description, values.color);
+            currentQuestlineIndex = 0;
+        } else { 
+            todo.atQuestline(currentQuestlineIndex).updateAll(values.title, values.description, values.color); //add here
+        }
         closeQuestlineModal();
         renderQuestlines(todo.content);
     }
