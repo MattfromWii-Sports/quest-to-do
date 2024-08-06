@@ -87,20 +87,5 @@ class Todo {
 
 }
 
-//testing
-const test = () => {
-    const x = new Todo([]);
-
-    x.createNewQuestline('title', '...', 'dhfaks');
-    x.addToQuestline(0, 0, new Quest('title1', 'desc1'));
-    x.addToQuestline(0, 0, new Quest('title2', 'desc2'));
-    x.moveDown(0, 0, 1);
-    console.log(x.content);
-    x.updateQuestDetails(0, 0, 0, 'new title', 'new desc');
-    x.toggleQuestStatus(0, 0, 0);
-    
-    console.log(x.content);
-}
-
-export {Todo, test};
+export {Todo};
 

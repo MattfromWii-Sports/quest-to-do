@@ -122,15 +122,28 @@ function buildLine() {
 }
 
 function toggleKebabMenu(target) {
+    closeKebabMenu(target);
+    //toggle it
+    target.nextSibling.classList.toggle('open');
+}
+function closeKebabMenu(target) {
     const all = document.querySelectorAll('.kebab-container');
     // Close all open kebab menus except the one being toggled
+
+    if(target === undefined) {
+        all.forEach(menu => {
+            if(menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        });
+        return;
+    }
+
     all.forEach(menu => {
       if (menu !== target.nextSibling) {
         menu.classList.remove('open');
       }
     });
-    //toggle it
-    target.nextSibling.classList.toggle('open');
 }
 function parentUp(target, count) {
     let i = 0;
@@ -141,17 +154,29 @@ function parentUp(target, count) {
     return target;
 }
 
-const questlineModal = document.querySelector('#questline-dialog');
+const questlineModal = document.querySelector('#questline-dialog'); //for opening/closing modal
+const questlineTitle = document.getElementById('questline-form-title');
+const questlineDescription = document.getElementById('questline-form-description');
+const questlineColor = document.getElementById('questline-form-color');
 
-function showQuestlineModal(title, description, color) {
-    if(title !== undefined || description !== undefined || color !== undefined) {
-        //do stuff
-    }
+function showQuestlineModal(title = '', description = '', color = '') {
+    questlineTitle.value = title;
+    questlineDescription.value = description;
+    questlineColor.value = color;
     questlineModal.showModal();
 }
 function closeQuestlineModal() {
     //reset values first
+    questlineTitle.value = '';
+    questlineDescription.value = '';
+    questlineColor.value = '#000000';
     questlineModal.close();
+}
+function getQuestlineModal() {
+    const title = questlineTitle.value;
+    const description = questlineDescription.value;
+    const color = questlineColor.value;
+    return {title, description, color};
 }
 
 export {loadStaticElements, 
@@ -161,4 +186,6 @@ export {loadStaticElements,
     toggleKebabMenu, 
     parentUp, 
     showQuestlineModal,
-    closeQuestlineModal};
+    closeQuestlineModal,
+    closeKebabMenu,
+    getQuestlineModal};

@@ -1,10 +1,10 @@
 import './styles.css';
 import {Todo} from './modules/to-do.js';
-import {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp, showQuestlineModal, closeQuestlineModal} from './modules/dom-manipulator.js'
+import {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp, showQuestlineModal, closeQuestlineModal, closeKebabMenu, getQuestlineModal} from './modules/dom-manipulator.js'
 
 const todo = new Todo(localStorage.getItem('todo') || []);
-todo.createNewQuestline('title', 'description', 'color1');
-todo.createNewQuestline('title2', 'description2', 'color12');
+todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjdhfjs dfjhsjdfh ', 'description', '#ff0000');
+todo.createNewQuestline('title2', 'description2', '#0000cc');
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -34,6 +34,7 @@ main.addEventListener('click', (e) => {
     }
 });
 
+let currentQuestlineIndex; //index of current edit of questline (code is very messy)
 function questlineEvents(e) {
     const targetClass = e.target.classList;
     const target = e.target;
@@ -50,8 +51,12 @@ function questlineEvents(e) {
         todo.moveQuestline(parentUp(target, 4).dataset.todoIndex);  
         renderQuestlines(todo.content); 
         console.log('move');
+
     } else if(targetClass.contains('edit-btn')) {
-        showQuestlineModal(); //add parameters later on pls
+        currentQuestlineIndex = parentUp(target, 4).dataset.todoIndex; //questline index
+        const questlineNode = todo.atQuestline(currentQuestlineIndex);
+        closeKebabMenu();
+        showQuestlineModal(questlineNode.getTitle(), questlineNode.getDescription(), questlineNode.getColor());
         console.log('edit');
 
     } else if(targetClass.contains('delete-btn')) {
@@ -67,16 +72,18 @@ function questlineEvents(e) {
     
 }
 
-//for modals
 const questlineForm = document.querySelector('.questline-form');
 questlineForm.addEventListener('click', e => {
-    e.preventDefault();
+    //note: prevent default stops color picker :)
     if(e.target.classList.contains('questline-form-cancel-btn')) { 
-        //reset it
         closeQuestlineModal();
+
     } else if(e.target.classList.contains('questline-form-submit-btn')) { 
-        //
+        e.preventDefault();
+        const values = getQuestlineModal();
+        todo.atQuestline(currentQuestlineIndex).updateAll(values.title, values.description, values.color); //add here
         closeQuestlineModal();
+        renderQuestlines(todo.content);
     }
 });
 
