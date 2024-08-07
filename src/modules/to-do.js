@@ -6,7 +6,7 @@ class Todo {
         this.content = content; //where everything is stored
     }
 
-    atQuestline(index) {
+    atQuestline(index) { //uses this to traverse questlines
         if(index >= this.content,length) {
             return false;
         }
@@ -34,57 +34,6 @@ class Todo {
         this.content.unshift(temp);
         return true;
     }
-
-    //takes index of questline
-    //then adds to questline using its class function (tierIndex involved)
-    addToQuestline(index, tierIndex, questObj) {
-        if(index >= this.content.length) {
-            return false;
-        }
-        return this.content[index].addToTier(tierIndex, questObj);
-    }
-    //removes quest from specific questline
-    removeFromQuestline(index, tierIndex, specificIndex) {
-        if(index >= this.content.length) {
-            return false;
-        }
-        return this.content[index].removeAtIndices(tierIndex, specificIndex);
-    }
-
-    //moves quest position down
-    moveDown(index, tierIndex, specificIndex) {
-        if(index >= this.content.length) {
-            return false;
-        }
-        return this.content[index].moveIndexDown(tierIndex, specificIndex);
-    }
-    //moves quest position up 
-    moveUp(index, tierIndex, specificIndex) {
-        if(index >= this.content.length) {
-            return false;
-        }
-        return this.content[index].moveIndexUp(tierIndex, specificIndex);
-    }
-
-    //updates quest details
-    updateQuestDetails(index, tierIndex, specificIndex, title, description) {
-        const currentQl = this.content[index];
-        if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
-            return false;
-        }
-        currentQl.atTierIndex(tierIndex, specificIndex).updateAll(title, description);
-        return true;
-    }
-    //updates quest status
-    toggleQuestStatus(index, tierIndex, specificIndex) {
-        const currentQl = this.content[index];
-        if(index >= this.content.length || tierIndex >= currentQl.getNumberOfTiers() || specificIndex >= currentQl.tierSize(tierIndex)) {
-            return false;
-        }
-        currentQl.atTierIndex(tierIndex, specificIndex).toggleCompleted();
-        return true;
-    }
-
 }
 
 export {Todo};

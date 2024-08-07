@@ -1,6 +1,8 @@
 import './styles.css';
 import {Todo} from './modules/to-do.js';
-import {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp, showQuestlineModal, closeQuestlineModal, closeKebabMenu, getQuestlineModal} from './modules/dom-manipulator.js'
+import {Quest} from './modules/quest-component.js';
+import {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp,  closeKebabMenu} from './modules/dom-manipulator.js'
+import {showQuestlineModal, closeQuestlineModal, getQuestlineModal} from './modules/modals.js'
 
 const todo = new Todo(localStorage.getItem('todo') || []);
 todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjdhfjs dfjhsjdfh ', 'description', '#ff0000');
@@ -14,13 +16,13 @@ const main = document.querySelector('.main');
 sideBar.addEventListener('click', (e) => {
     if(e.target.classList.contains('home')) {
         currentTab = 'home';
-        console.log('home');
+
     } else if(e.target.classList.contains('questlines')) {
         currentTab = 'questlines';
         renderQuestlines(todo.content);
+
     } else if(e.target.classList.contains('settings')) {
         currentTab = 'settings';
-        console.log('settings');
     }
 });
 
@@ -92,9 +94,6 @@ questlineForm.addEventListener('click', e => {
         renderQuestlines(todo.content);
     }
 });
-
-//temporary
-// showQuestlineModal();
 
 //load this first
 loadStaticElements();
