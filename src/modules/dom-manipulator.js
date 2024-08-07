@@ -99,19 +99,13 @@ function buildQuestlineCard(questlineObj) {
     return container;
 }
 
-//builds element with classes
-function buildElementClass(type, ...classes) {
-    const elem = document.createElement(type);
-    elem.classList.add(...classes);
-    return elem;
+function buildQuestCard(questObj) {
+
 }
-//build element
-function buildElement(type) {
-    return document.createElement(type);
-}
+
 //builds add button
 function buildQuestAddButton() {
-    const button = buildElementClass('button', 'add-btn');
+    const button = buildElementClass('button', 'quest-add-btn');
     button.textContent = '+ NEW QUEST';
     return button;
 }
@@ -122,9 +116,23 @@ function buildQuestlineAddButton() {
 }
 //builds tier line separator
 function buildLine() {
-
+    const span = buildElementClass('span', 'line');
+    span.textContent = '+ NEW QUEST';
+    return span;
 }
 
+//builds element with classes
+function buildElementClass(type, ...classes) {
+    const elem = document.createElement(type);
+    elem.classList.add(...classes);
+    return elem;
+}
+//build element
+function buildElement(type) {
+    return document.createElement(type);
+}
+
+// Misc. stuff
 function toggleKebabMenu(target) {
     closeKebabMenu(target);
     //toggle it

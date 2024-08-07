@@ -85,19 +85,59 @@ body {
 
 
 .questline-add-btn,
-.add-btn {
+.quest-add-btn {
     width: 95%;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     padding: 5px;
     border: 2px solid black;
 }
-span.line {
+
+.kebab-menu {
+    margin-right: -10px;
+    height: 2.5rem;
+    transform: scale(1.2);
+}
+.kebab-container {
+    position: absolute;
+    padding: 4px 2px;
     border: 2px solid black;
+    background-color: white;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 1px;
+    width: max-content;
+}
+.kebab-container.open {
+    display: flex;
+}
+.kebab-container > button {
+    font-size: 1.3rem;
+    border: none;
+    width: 100%;
+    padding: 3px;
+    text-align: left;
+    background-color: transparent;
+}
+.kebab-container > button:hover {
+    background-color: grey;
+}
+
+span.line {
+    border: 1px solid black;
     width: 100%;
     height: 0;
 }
 
-/* questline tab stuff */
+.description {
+    font-size: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* questline card */
 .questline-container {
     width: 95%;
     border: 2px solid black;
@@ -131,38 +171,8 @@ span.line {
     font-size: 1.3rem;
     border: 2px solid black;
 }
-.kebab-menu {
-    margin-right: -10px;
-    height: 2.5rem;
-    transform: scale(1.2);
-}
-.kebab-container {
-    position: absolute;
+.questline-container .kebab-container {
     transform: translateY(-85%);
-    padding: 4px 2px;
-    border: 2px solid black;
-    background-color: white;
-    z-index: 2;
-    display: none;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    gap: 1px;
-    width: max-content;
-}
-.kebab-container.open {
-    display: flex;
-}
-.kebab-container > button {
-    font-size: 1.3rem;
-    border: none;
-    width: 100%;
-    padding: 3px;
-    text-align: left;
-    background-color: transparent;
-}
-.kebab-container > button:hover {
-    background-color: grey;
 }
 
 .questline-bottom {
@@ -170,15 +180,11 @@ span.line {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    
 }
 .questline-bottom .description {
-    font-size: 1.2rem;
     margin-top: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    height: 6rem;
     width: 100%;
+    height: 6rem;
 }
 .questline-progress-container {
     width: 100%;
@@ -223,6 +229,62 @@ span.line {
     text-align: center;
     width: 95%;
     margin-top: -10px;
+}
+
+/* quest card */
+.quest-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    border: 2px solid black;
+    background-color: aqua;
+    padding: 10px 15px;
+    gap: 8px;
+}
+
+.quest-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+.checkbox {
+    border: 1px solid black;
+    min-width: 2rem;
+    height: 2rem;
+}
+.quest-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.quest-text > h3 {
+    font-size: 1.6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
+.quest-text > .description {
+    margin-top: -2px;
+    text-wrap: nowrap;
+}
+
+.quest-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    position: relative;
+    min-width: 0;
+}
+.quest-details {
+    font-size: 1.2rem;
+    border: 2px solid black;
+    padding: 5px 20px;
 }
 
 /* modal styles */
