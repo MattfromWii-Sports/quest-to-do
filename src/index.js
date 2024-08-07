@@ -12,39 +12,48 @@ console.log(todo);
 const sideBar = document.querySelector('.side');
 const main = document.querySelector('.main');
 
+//for tabs
+//tracks events that may occur in main (DO NOT FORGET TO UPDATE THIS)
+let currentEvents = 'quest';
+
 //for sidebar buttons
 sideBar.addEventListener('click', (e) => {
     if(e.target.classList.contains('home')) {
-        currentTab = 'home';
+        currentEvents = 'quest'; //basically home
 
     } else if(e.target.classList.contains('questlines')) {
-        currentTab = 'questlines';
+        currentEvents = 'questlines';
         renderQuestlines(todo.content);
 
     } else if(e.target.classList.contains('settings')) {
-        currentTab = 'settings';
+        currentEvents = 'settings';
     }
 });
 
-//for tabs
-let currentTab = 'home';
 main.addEventListener('click', (e) => {
-    switch(currentTab) {
+    const target = e.target;
+    //check if main was pressed 
+    if(target.classList.contains('main')) {
+        closeKebabMenu(); //close open kebab menus
+        return; //nothing happens
+    }
+    //kebab menu for all
+    if(target.classList.contains('kebab-menu')) {
+        toggleKebabMenu(target);
+        return;
+    }
+
+    //other listeners
+    switch(currentEvents) {
         case 'home': ;
-        case 'questlines': questlineEvents(e);
+        case 'questlines': questlineEvents(target);
         case 'settings': ;
     }
 });
 
 let currentQuestlineIndex; //index of current edit of questline (code is very messy)
-function questlineEvents(e) {
-    const targetClass = e.target.classList;
-    const target = e.target;
-
-    if(targetClass.contains('main')) {
-        closeKebabMenu(); //close open kebab menus
-        return; //nothing happens
-    }
+function questlineEvents(target) {
+    const targetClass = target.classList;
 
     if(targetClass.contains('questline-add-btn')) {
         currentQuestlineIndex = null;
@@ -66,15 +75,17 @@ function questlineEvents(e) {
     } else if(targetClass.contains('delete-btn')) {
         todo.removeQuestline(parentUp(target, 4).dataset.todoIndex);
         renderQuestlines(todo.content);
-        console.log('delete');
-
-    } else if(targetClass.contains('kebab-menu')){  
-        toggleKebabMenu(target);
+        console.log('delete'); 
     } else { //works since main click accounted for
         console.log('open ql');
     }
 }
 
+function questEvents(target) {
+    const targetClass = target.classList;
+}
+
+//questline form listener
 const questlineForm = document.querySelector('.questline-form');
 questlineForm.addEventListener('click', e => {
     //note: prevent default stops color picker :)

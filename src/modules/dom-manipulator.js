@@ -136,13 +136,13 @@ function buildElement(type) {
 function toggleKebabMenu(target) {
     closeKebabMenu(target);
     //toggle it
-    target.nextSibling.classList.toggle('open');
+    target.nextElementSibling.classList.toggle('open');
 }
-function closeKebabMenu(target) {
+function closeKebabMenu(target = false) {
     const all = document.querySelectorAll('.kebab-container');
-    // Close all open kebab menus except the one being toggled
 
-    if(target === undefined) {
+    // Close all open kebab menus except the one being toggled
+    if(target === false) {
         all.forEach(menu => {
             if(menu.classList.contains('open')) {
                 menu.classList.remove('open');
@@ -152,11 +152,12 @@ function closeKebabMenu(target) {
     }
 
     all.forEach(menu => {
-      if (menu !== target.nextSibling) {
+      if (menu !== target.nextElementSibling) {
         menu.classList.remove('open');
       }
     });
 }
+
 function parentUp(target, count) {
     let i = 0;
     while(i != count) {

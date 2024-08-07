@@ -114,7 +114,6 @@ body {
     display: flex;
 }
 .kebab-container > button {
-    font-size: 1.3rem;
     border: none;
     width: 100%;
     padding: 3px;
@@ -173,6 +172,9 @@ span.line {
 }
 .questline-container .kebab-container {
     transform: translateY(-85%);
+}
+.questline-container .kebab-container button {
+    font-size: 1.3rem;
 }
 
 .questline-bottom {
@@ -285,6 +287,12 @@ span.line {
     font-size: 1.2rem;
     border: 2px solid black;
     padding: 5px 20px;
+}
+.quest-container .kebab-container {
+    transform: translateY(-77%);
+}
+.quest-container .kebab-container button {
+    font-size: 1.2rem;
 }
 
 /* modal styles */
