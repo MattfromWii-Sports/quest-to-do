@@ -3,7 +3,7 @@
     margin: 0;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
-div, button {
+div, button, span {
     box-sizing: border-box;
 }
 
@@ -90,6 +90,9 @@ body {
     font-size: 1.4rem;
     padding: 5px;
     border: 2px solid black;
+}
+.quest-add-btn {
+    margin-bottom: -8px;
 }
 
 .kebab-menu {
@@ -243,6 +246,8 @@ span.line {
     background-color: aqua;
     padding: 10px 15px;
     gap: 8px;
+    border-left-width: 1rem;
+    border-color: black; /*this will be updated for questline colors*/
 }
 
 .quest-left {

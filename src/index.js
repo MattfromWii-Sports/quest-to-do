@@ -7,6 +7,9 @@ import {showQuestlineModal, closeQuestlineModal, getQuestlineModal} from './modu
 const todo = new Todo(localStorage.getItem('todo') || []);
 todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjdhfjs dfjhsjdfh ', 'description', '#ff0000');
 todo.createNewQuestline('title2', 'description2', '#0000cc');
+todo.atQuestline(0).addToTier(0, new Quest('title', 'hdaksdh', 'colour'));
+todo.atQuestline(0).addToTier(0, new Quest('title2', 'hdaksdh', 'colour'));
+todo.atQuestline(0).moveIndexDown(0, 1);
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -76,12 +79,11 @@ function questlineEvents(target) {
         todo.removeQuestline(parentUp(target, 4).dataset.todoIndex);
         renderQuestlines(todo.content);
         console.log('delete'); 
+
     } else { //works since main click accounted for
         currentQuestlineIndex = findParent(target, 'questline-container').dataset.todoIndex;
         currentEvents = 'quest';
-        renderQuestlineQuests(todo.atQuestline(currentQuestlineIndex));
-        
-
+        renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('open ql');
     }
 }

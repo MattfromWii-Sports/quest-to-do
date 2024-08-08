@@ -35,14 +35,38 @@ function renderQuestlines(todoArray) {
     }
 }
 
-function renderQuestlineQuests(questlineObj) {
+function renderQuestlineQuests(todoObj, index) {
+    const questline = todoObj.atQuestline(index);
+
     clear(mainDiv);
     const title = buildElement('h2');
-    title.textContent = questlineObj.getTitle();
+    title.textContent = questline.getTitle();
     const description = buildElementClass('p', 'description');
-    description.textContent = questlineObj.getDescription();
-
+    description.textContent = questline.getDescription();
     mainDiv.append(buildLine(), title, description, buildLine());
+
+    console.log(questline);
+
+    for(let tier = 0; tier < questline.getNumberOfTiers(); tier++) { 
+        //build add button before
+        const add = buildQuestAddButton();
+        add.dataset.todoIndex = index;
+        add.dataset.todoTier = tier;
+        mainDiv.appendChild(add);
+
+        for(let i = 0; i < questline.tierSize(tier); i++) {
+            console.log(questline.atTierIndex(tier, i));
+            const card = buildQuestCard(questline.atTierIndex(tier, i));
+            card.dataset.todoIndex = index;
+            card.dataset.todoTier = tier;
+            card.dataset.todoSpecificIndex = i;
+            mainDiv.appendChild(card);
+        }
+        //line after
+        mainDiv.appendChild(buildLine());
+    }
+
+    
 }
 
 function renderSettings() {
@@ -54,8 +78,6 @@ function renderSettings() {
 function clear(div) {
     div.innerHTML = '';
 }
-
-//__NEED TO ADD DATA VALUES LATER__
 
 //builds questline divs
 function buildQuestlineCard(questlineObj) {
@@ -105,10 +127,11 @@ function buildQuestlineCard(questlineObj) {
     return container;
 }
 
+//need to add checked data value for checkbox
 function buildQuestCard(questObj) {
     const container = buildElementClass('div', 'quest-container');
     const leftContainer = buildElementClass('div', 'quest-left');
-    const rightContainer = buildElementClass('div', 'right-left');
+    const rightContainer = buildElementClass('div', 'quest-right');
 
     const check = buildElementClass('span', 'checkbox');
     const textContainer = buildElementClass('div', 'quest-text');
