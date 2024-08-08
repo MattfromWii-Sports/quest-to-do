@@ -37,6 +37,12 @@ function renderQuestlines(todoArray) {
 
 function renderQuestlineQuests(questlineObj) {
     clear(mainDiv);
+    const title = buildElement('h2');
+    title.textContent = questlineObj.getTitle();
+    const description = buildElementClass('p', 'description');
+    description.textContent = questlineObj.getDescription();
+
+    mainDiv.append(buildLine(), title, description, buildLine());
 }
 
 function renderSettings() {
@@ -100,7 +106,40 @@ function buildQuestlineCard(questlineObj) {
 }
 
 function buildQuestCard(questObj) {
+    const container = buildElementClass('div', 'quest-container');
+    const leftContainer = buildElementClass('div', 'quest-left');
+    const rightContainer = buildElementClass('div', 'right-left');
 
+    const check = buildElementClass('span', 'checkbox');
+    const textContainer = buildElementClass('div', 'quest-text');
+
+    const title = buildElement('h3');
+    title.textContent = questObj.getTitle();
+    const description = buildElementClass('p', 'description');
+    description.textContent = questObj.getDescription();
+
+    const detailButton = buildElementClass('button', 'quest-details');
+    detailButton.textContent = 'DETAILS';
+    const kebabIcon = buildElementClass('img', 'kebab-menu');
+    kebabIcon.src = kebabImg;
+    const kebabContainer = buildElementClass('div', 'kebab-container');
+
+    const moveUpButton = buildElementClass('button', 'move-up-btn');
+    moveUpButton.textContent = 'MOVE UP';
+    const moveDownButton = buildElementClass('button', 'move-down-btn');
+    moveDownButton.textContent = 'MOVE DOWN';
+    const editButton = buildElementClass('button', 'edit-btn');
+    editButton.textContent = 'EDIT';
+    const deleteButton = buildElementClass('button', 'delete-btn');
+    deleteButton.textContent = 'DELETE';
+
+    container.append(leftContainer, rightContainer);
+    leftContainer.append(check, textContainer);
+    rightContainer.append(detailButton, kebabIcon, kebabContainer);
+    textContainer.append(title, description);
+    kebabContainer.append(moveUpButton, moveDownButton, editButton, deleteButton);
+
+    return container;
 }
 
 //builds add button
@@ -117,7 +156,6 @@ function buildQuestlineAddButton() {
 //builds tier line separator
 function buildLine() {
     const span = buildElementClass('span', 'line');
-    span.textContent = '+ NEW QUEST';
     return span;
 }
 
@@ -166,11 +204,23 @@ function parentUp(target, count) {
     }
     return target;
 }
+function findParent(target, className) {
+    let current = target;
+    while(current) {
+        if(current.classList.contains(className)) {
+            return current;
+        }
+        current = current.parentNode;
+    }
+    return null;
+}
 
 export {loadStaticElements, 
     renderHome, 
     renderQuestlines, 
     renderSettings, 
+    renderQuestlineQuests,
     toggleKebabMenu, 
+    closeKebabMenu,
     parentUp, 
-    closeKebabMenu};
+    findParent};

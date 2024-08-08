@@ -1,7 +1,7 @@
 import './styles.css';
 import {Todo} from './modules/to-do.js';
 import {Quest} from './modules/quest-component.js';
-import {loadStaticElements, renderHome, renderQuestlines, renderSettings, toggleKebabMenu, parentUp,  closeKebabMenu} from './modules/dom-manipulator.js'
+import {loadStaticElements, renderHome, renderQuestlines, renderSettings, renderQuestlineQuests,toggleKebabMenu, closeKebabMenu,parentUp, findParent} from './modules/dom-manipulator.js'
 import {showQuestlineModal, closeQuestlineModal, getQuestlineModal} from './modules/modals.js'
 
 const todo = new Todo(localStorage.getItem('todo') || []);
@@ -45,9 +45,9 @@ main.addEventListener('click', (e) => {
 
     //other listeners
     switch(currentEvents) {
-        case 'home': ;
-        case 'questlines': questlineEvents(target);
-        case 'settings': ;
+        case 'quest': break;
+        case 'questlines': questlineEvents(target); break;
+        case 'settings': break;
     }
 });
 
@@ -77,6 +77,11 @@ function questlineEvents(target) {
         renderQuestlines(todo.content);
         console.log('delete'); 
     } else { //works since main click accounted for
+        currentQuestlineIndex = findParent(target, 'questline-container').dataset.todoIndex;
+        currentEvents = 'quest';
+        renderQuestlineQuests(todo.atQuestline(currentQuestlineIndex));
+        
+
         console.log('open ql');
     }
 }
