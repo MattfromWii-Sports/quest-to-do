@@ -21,6 +21,9 @@ class Quest {
     getDescription() {
         return this.description;
     }
+    getStatus() {
+        return this.isCompleted;
+    }
 }
 
 //quests go here

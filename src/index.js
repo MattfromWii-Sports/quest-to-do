@@ -9,7 +9,7 @@ todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjd
 todo.createNewQuestline('title2', 'description2', '#0000cc');
 todo.atQuestline(0).addToTier(0, new Quest('title', 'hdaksdh', 'colour'));
 todo.atQuestline(0).addToTier(0, new Quest('title2', 'hdaksdh', 'colour'));
-todo.atQuestline(0).moveIndexDown(0, 1);
+todo.atQuestline(0).atTierIndex(0, 0).toggleCompleted();
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -62,26 +62,31 @@ function questlineEvents(target) {
         currentQuestlineIndex = null;
         showQuestlineModal();
         console.log('new ql');
+        return;
+    } 
+    
+    //things needing questline datasets
+    const currentQ = findParent(target, 'questline-container');
 
-    } else if(targetClass.contains('move-btn')) {
-        todo.moveQuestline(parentUp(target, 4).dataset.todoIndex);  
+    if(targetClass.contains('move-btn')) {
+        todo.moveQuestline(currentQ.dataset.todoIndex);  
         renderQuestlines(todo.content); 
         console.log('move');
 
     } else if(targetClass.contains('edit-btn')) {
-        currentQuestlineIndex = parentUp(target, 4).dataset.todoIndex; //questline index
+        currentQuestlineIndex = currentQ.dataset.todoIndex; //questline index
         const questlineNode = todo.atQuestline(currentQuestlineIndex);
         closeKebabMenu();
         showQuestlineModal(questlineNode.getTitle(), questlineNode.getDescription(), questlineNode.getColor());
         console.log('edit');
 
     } else if(targetClass.contains('delete-btn')) {
-        todo.removeQuestline(parentUp(target, 4).dataset.todoIndex);
+        todo.removeQuestline(currentQ.dataset.todoIndex);
         renderQuestlines(todo.content);
         console.log('delete'); 
 
     } else { //works since main click accounted for
-        currentQuestlineIndex = findParent(target, 'questline-container').dataset.todoIndex;
+        currentQuestlineIndex = currentQ.dataset.todoIndex;
         currentEvents = 'quest';
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('open ql');

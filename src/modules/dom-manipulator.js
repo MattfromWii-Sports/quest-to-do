@@ -45,8 +45,6 @@ function renderQuestlineQuests(todoObj, index) {
     description.textContent = questline.getDescription();
     mainDiv.append(buildLine(), title, description, buildLine());
 
-    console.log(questline);
-
     for(let tier = 0; tier < questline.getNumberOfTiers(); tier++) { 
         //build add button before
         const add = buildQuestAddButton();
@@ -55,7 +53,6 @@ function renderQuestlineQuests(todoObj, index) {
         mainDiv.appendChild(add);
 
         for(let i = 0; i < questline.tierSize(tier); i++) {
-            console.log(questline.atTierIndex(tier, i));
             const card = buildQuestCard(questline.atTierIndex(tier, i));
             card.dataset.todoIndex = index;
             card.dataset.todoTier = tier;
@@ -130,6 +127,13 @@ function buildQuestlineCard(questlineObj) {
 //need to add checked data value for checkbox
 function buildQuestCard(questObj) {
     const container = buildElementClass('div', 'quest-container');
+    const color = buildElementClass('div', 'quest-color');
+    const content = buildElementClass('div', 'quest-main');
+
+    if(questObj.getStatus() === true) {
+        container.classList.add('done');
+    }
+
     const leftContainer = buildElementClass('div', 'quest-left');
     const rightContainer = buildElementClass('div', 'quest-right');
 
@@ -156,7 +160,8 @@ function buildQuestCard(questObj) {
     const deleteButton = buildElementClass('button', 'delete-btn');
     deleteButton.textContent = 'DELETE';
 
-    container.append(leftContainer, rightContainer);
+    container.append(color, content);
+    content.append(leftContainer, rightContainer);
     leftContainer.append(check, textContainer);
     rightContainer.append(detailButton, kebabIcon, kebabContainer);
     textContainer.append(title, description);
