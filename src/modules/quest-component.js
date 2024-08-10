@@ -73,20 +73,25 @@ class Questline {
         if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
             return false;
         }
+
+        this.storage[tierIndex].splice(specificIndex, 1); //remove it
         this.count -= 1;
-        //remove element
-        return this.storage[tierIndex].splice(specificIndex, 1);
+        return true;
     }
 
     //moves element at indices to next place/tier
     moveIndexDown(tierIndex, specificIndex) {
+        //make sure values are integers first
+        tierIndex = parseInt(tierIndex);
+        specificIndex = parseInt(specificIndex);
+
         //check if tierIndex & specificIndex exist
         if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
             return false;
         }
 
-        //first check if specificIndex is at the end
-        //if so, need to move it to next tier
+        // first check if specificIndex is at the end
+        // if so, need to move it to next tier
         if(specificIndex === this.tierSize(tierIndex) - 1) {
             //check if next tierIndex is present already
             if(tierIndex + 1 >= this.storage.length) {
@@ -106,12 +111,16 @@ class Questline {
 
         //if specificIndex is not at the end -> swap within tier (tierIndex stays same)
         //specificIndex + 1 : swap with next place 
-        this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex + 1);
+        console.log(this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex + 1));
         return true;
     }
 
     //moves element at indices to previous place/tier
     moveIndexUp(tierIndex, specificIndex) {
+        //make sure values are integers first
+        tierIndex = parseInt(tierIndex);
+        specificIndex = parseInt(specificIndex);
+
         //check if tierIndex & specificIndex exist
         if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
             return false;
@@ -142,7 +151,7 @@ class Questline {
 
         //if specificIndex is not at the start -> swap within tier (tierIndex stays same)
         //specificIndex - 1 : swap with previous place 
-        this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex - 1);
+        console.log(this.swapIndices(tierIndex, specificIndex, tierIndex, specificIndex - 1));
         return true;
     }
 
@@ -177,9 +186,10 @@ class Questline {
 
     //swaps two sets of indices 
     swapIndices(tierIndex1, index1, tierIndex2, index2) {
-        const temp = this.storage[tierIndex1][index1]
+        const temp = this.storage[tierIndex1][index1];
         this.storage[tierIndex1][index1] = this.storage[tierIndex2][index2];
         this.storage[tierIndex2][index2] = temp;
+        return [this.storage[tierIndex1][index1], this.storage[tierIndex2][index2]]; //for debugging
     }
     //removes tier
     removeTierIfEmpty(tierIndex) {

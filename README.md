@@ -20,3 +20,5 @@ A To-Do website with a gamified twist. It will implement rpg quest like function
 
 ### BUGS ENCOUNTERED
 1. Javascript variable (value of 0) + 1 --> 01 not 1 --> use parseInt()
+2. Forget numerous times to run webpack after making an edit
+3. Forget to add logic for removeAtIndices Questline class function

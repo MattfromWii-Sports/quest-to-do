@@ -9,7 +9,6 @@ todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjd
 todo.createNewQuestline('title2', 'description2', '#0000cc');
 todo.atQuestline(0).addToTier(0, new Quest('title', 'hdaksdh', 'colour'));
 todo.atQuestline(0).addToTier(0, new Quest('title2', 'hdaksdh', 'colour'));
-todo.atQuestline(0).atTierIndex(0, 0).toggleCompleted();
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -48,7 +47,7 @@ main.addEventListener('click', (e) => {
 
     //other listeners
     switch(currentEvents) {
-        case 'quest': break;
+        case 'quest': questEvents(target); break;
         case 'questlines': questlineEvents(target); break;
         case 'settings': break;
     }
@@ -61,40 +60,66 @@ function questlineEvents(target) {
     if(targetClass.contains('questline-add-btn')) {
         currentQuestlineIndex = null;
         showQuestlineModal();
-        console.log('new ql');
         return;
     } 
     
     //things needing questline datasets
-    const currentQ = findParent(target, 'questline-container');
+    const current = findParent(target, 'questline-container');
 
     if(targetClass.contains('move-btn')) {
-        todo.moveQuestline(currentQ.dataset.todoIndex);  
+        todo.moveQuestline(current.dataset.todoIndex);  
         renderQuestlines(todo.content); 
-        console.log('move');
 
     } else if(targetClass.contains('edit-btn')) {
-        currentQuestlineIndex = currentQ.dataset.todoIndex; //questline index
+        currentQuestlineIndex = current.dataset.todoIndex; //questline index
         const questlineNode = todo.atQuestline(currentQuestlineIndex);
         closeKebabMenu();
         showQuestlineModal(questlineNode.getTitle(), questlineNode.getDescription(), questlineNode.getColor());
-        console.log('edit');
 
     } else if(targetClass.contains('delete-btn')) {
-        todo.removeQuestline(currentQ.dataset.todoIndex);
-        renderQuestlines(todo.content);
-        console.log('delete'); 
+        todo.removeQuestline(current.dataset.todoIndex);
+        renderQuestlines(todo.content); 
 
     } else { //works since main click accounted for
-        currentQuestlineIndex = currentQ.dataset.todoIndex;
+        currentQuestlineIndex = current.dataset.todoIndex;
         currentEvents = 'quest';
         renderQuestlineQuests(todo, currentQuestlineIndex);
-        console.log('open ql');
     }
 }
 
 function questEvents(target) {
     const targetClass = target.classList;
+
+    if(targetClass.contains('quest-add-btn')) {
+        console.log('add q');
+        return;
+    }
+
+    const current = findParent(target, 'quest-container'); //contains datasets
+
+    if(targetClass.contains('move-up-btn')) { 
+        todo.atQuestline(current.dataset.todoIndex).moveIndexUp(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        renderQuestlineQuests(todo, currentQuestlineIndex);
+        console.log('move up');
+
+    } else if(targetClass.contains('move-down-btn')) {     
+        todo.atQuestline(current.dataset.todoIndex).moveIndexDown(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        renderQuestlineQuests(todo, currentQuestlineIndex);
+        console.log('move down');
+
+    } else if(targetClass.contains('edit-btn')) {
+        closeKebabMenu();
+        console.log('edit');
+
+    } else if(targetClass.contains('delete-btn')) {
+        renderQuestlineQuests(todo, currentQuestlineIndex);
+        console.log('delete');
+
+    } else {
+        console.log('open');
+    }
+
+    console.log(todo.content.atQuestline(currentQuestlineIndex));
 }
 
 //questline form listener
