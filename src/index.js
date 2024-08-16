@@ -2,7 +2,7 @@ import './styles.css';
 import {Todo} from './modules/to-do.js';
 import {Quest} from './modules/quest-component.js';
 import {loadStaticElements, renderHome, renderQuestlines, renderSettings, renderQuestlineQuests,toggleKebabMenu, closeKebabMenu,parentUp, findParent} from './modules/dom-manipulator.js'
-import {showQuestlineModal, closeQuestlineModal, getQuestlineModal} from './modules/modals.js'
+import {showQuestlineModal, closeQuestlineModal, getQuestlineModal, showQuestModal, closeQuestModal, getQuestModal} from './modules/modals.js'
 
 const todo = new Todo(localStorage.getItem('todo') || []);
 todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjdhfjs dfjhsjdfh ', 'description', '#ff0000');
@@ -53,7 +53,7 @@ main.addEventListener('click', (e) => {
     }
 });
 
-let currentQuestlineIndex; //index of current edit of questline (code is very messy)
+let currentQuestlineIndex; //index of current edit of questline (used for forms also)
 function questlineEvents(target) {
     const targetClass = target.classList;
 
@@ -91,27 +91,31 @@ function questEvents(target) {
     const targetClass = target.classList;
 
     if(targetClass.contains('quest-add-btn')) {
+        showQuestModal();
         console.log('add q');
         return;
     }
 
     const current = findParent(target, 'quest-container'); //contains datasets
+    currentQuestlineIndex = current.dataset.todoIndex
 
     if(targetClass.contains('move-up-btn')) { 
-        todo.atQuestline(current.dataset.todoIndex).moveIndexUp(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        todo.atQuestline(currentQuestlineIndex).moveIndexUp(current.dataset.todoTier, current.dataset.todoSpecificIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('move up');
 
     } else if(targetClass.contains('move-down-btn')) {     
-        todo.atQuestline(current.dataset.todoIndex).moveIndexDown(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        todo.atQuestline(currentQuestlineIndex).moveIndexDown(current.dataset.todoTier, current.dataset.todoSpecificIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('move down');
 
     } else if(targetClass.contains('edit-btn')) {
         closeKebabMenu();
+        showQuestModal();
         console.log('edit');
 
     } else if(targetClass.contains('delete-btn')) {
+        todo.atQuestline(currentQuestlineIndex).removeAtIndices(current.dataset.todoTier, current.dataset.todoSpecificIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('delete');
 
@@ -119,7 +123,7 @@ function questEvents(target) {
         console.log('open');
     }
 
-    console.log(todo.content.atQuestline(currentQuestlineIndex));
+    console.log(todo.atQuestline(currentQuestlineIndex));
 }
 
 //questline form listener
@@ -140,6 +144,17 @@ questlineForm.addEventListener('click', e => {
         }
         closeQuestlineModal();
         renderQuestlines(todo.content);
+    }
+});
+
+const questForm = document.querySelector('.quest-form');
+questForm.addEventListener('click', e => {
+    if(e.target.classList.contains('quest-form-cancel-btn')) { 
+        closeQuestModal();
+    } else if(e.target.classList.contains('quest-form-submit-btn')) { 
+        e.preventDefault();
+        //do stuff
+        closeQuestModal();
     }
 });
 

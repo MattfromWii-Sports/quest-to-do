@@ -19,35 +19,6 @@
             </ol>
         </div>
         <div class="main">
-
-            <!-- questline structure draft
-            <button class="questline-add-btn">+ NEW</button>
-            <div class="questline-container">
-               <div class="questline-top">
-                    <h3>TITLE</h3>
-                    <div class="buttons">
-                        <button class="questline-open-btn">OPEN</button>
-                        <img class="kebab-menu" src="../src/images/dots-vertical.svg">
-                        <div class="kebab-container">
-                            <button class="move-btn">MOVE TO TOP</button>
-                            <button class="edit-btn">EDIT</button>
-                            <button class="delete-btn">DELETE</button>
-                        </div>
-                    </div>
-               </div>
-               <div class="questline-bottom">
-                    <p class="description"></p>
-                    <div class="questline-progress-container">
-                        <p>PROGRESS</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                            <span class="progress-text">10/10</span>
-                        </div>
-                    </div>
-               </div>
-            </div>-->
-            
-            <!-- quest structure draft 
             <div class="quest-container">
                 <div class="quest-color"></div>
                 <div class="quest-main">
@@ -69,12 +40,12 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
         </div>
 
         <dialog class="modal" id="questline-dialog">
-            <form class="questline-form">
+            <form class="questline-form" method="POST" action="#">
                 <div class="form-section"> 
                     <label>TITLE</label>
                     <input type="text" id="questline-form-title" name="questline-form-title" maxlength="150">
@@ -90,6 +61,23 @@
                 <div class="buttons">
                     <button type="button" class="questline-form-cancel-btn">CANCEL</button>
                     <button type="submit" class="questline-form-submit-btn">SUBMIT</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog class="modal" id="quest-dialog">
+            <form class="quest-form" method="POST" action="#">
+                <div class="form-section"> 
+                    <label>TITLE</label>
+                    <input type="text" id="quest-form-title" name="quest-form-title" maxlength="150">
+                </div>
+                <div class="form-section">
+                    <label>DESCRIPTION</label>
+                    <textarea type="textarea" id="quest-form-description" name="quest-form-description" rows="4" maxlength="300"></textarea>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="quest-form-cancel-btn">CANCEL</button>
+                    <button type="submit" class="quest-form-submit-btn">SUBMIT</button>
                 </div>
             </form>
         </dialog>

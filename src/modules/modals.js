@@ -1,3 +1,4 @@
+//for questline modals
 const questlineModal = document.querySelector('#questline-dialog'); //for opening/closing modal
 const questlineTitle = document.getElementById('questline-form-title');
 const questlineDescription = document.getElementById('questline-form-description');
@@ -23,6 +24,31 @@ function getQuestlineModal() {
     return {title, description, color};
 }
 
+//for quest modals
+const questModal = document.querySelector('#quest-dialog'); //for opening/closing modal
+const questTitle = document.getElementById('quest-form-title');
+const questDescription = document.getElementById('quest-form-description');
+
+function showQuestModal(title = '', description = '', color = '') {
+    questTitle.value = title;
+    questDescription.value = description;
+    questModal.showModal();
+}
+function closeQuestModal() {
+    //reset values first
+    questTitle.value = '';
+    questDescription.value = '';
+    questModal.close();
+}
+function getQuestModal() {
+    const title = questTitle.value;
+    const description = questDescription.value;
+    return {title, description};
+}
+
 export {showQuestlineModal,
     closeQuestlineModal,
-    getQuestlineModal}
+    getQuestlineModal,
+    showQuestModal,
+    closeQuestModal,
+    getQuestModal}

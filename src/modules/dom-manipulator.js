@@ -46,11 +46,7 @@ function renderQuestlineQuests(todoObj, index) {
     mainDiv.append(buildLine(), title, description, buildLine());
 
     for(let tier = 0; tier < questline.getNumberOfTiers(); tier++) { 
-        //build add button before
-        const add = buildQuestAddButton();
-        add.dataset.todoIndex = index;
-        add.dataset.todoTier = tier;
-        mainDiv.appendChild(add);
+        mainDiv.appendChild(buildQuestAddButton(index,tier));
 
         for(let i = 0; i < questline.tierSize(tier); i++) {
             const card = buildQuestCard(questline.atTierIndex(tier, i));
@@ -63,7 +59,8 @@ function renderQuestlineQuests(todoObj, index) {
         mainDiv.appendChild(buildLine());
     }
 
-    
+    //add button after
+    mainDiv.appendChild(buildQuestAddButton(index, questline.getNumberOfTiers())); //NEED TO EDIT LOGIC OF QL CLASS (adding new array at end)
 }
 
 function renderSettings() {
@@ -171,9 +168,15 @@ function buildQuestCard(questObj) {
 }
 
 //builds add button
-function buildQuestAddButton() {
+function buildQuestAddButton(todoIndex = '', tierIndex = '') {
     const button = buildElementClass('button', 'quest-add-btn');
     button.textContent = '+ NEW QUEST';
+    if(todoIndex !== '') {
+        button.dataset.todoIndex = todoIndex;
+    }
+    if(tierIndex !== '') {
+        button.dataset.todoTier = tierIndex;
+    }
     return button;
 }
 function buildQuestlineAddButton() {
