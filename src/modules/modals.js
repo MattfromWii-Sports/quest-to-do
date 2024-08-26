@@ -29,7 +29,7 @@ const questModal = document.querySelector('#quest-dialog'); //for opening/closin
 const questTitle = document.getElementById('quest-form-title');
 const questDescription = document.getElementById('quest-form-description');
 
-function showQuestModal(title = '', description = '', color = '') {
+function showQuestModal(title = '', description = '') {
     questTitle.value = title;
     questDescription.value = description;
     questModal.showModal();

@@ -51,7 +51,7 @@ function renderQuestlineQuests(todoObj, index) {
         for(let i = 0; i < questline.tierSize(tier); i++) {
             const card = buildQuestCard(questline.atTierIndex(tier, i));
             card.dataset.todoIndex = index;
-            card.dataset.todoTier = tier;
+            card.dataset.todoTierIndex = tier;
             card.dataset.todoSpecificIndex = i;
             mainDiv.appendChild(card);
         }
@@ -175,7 +175,7 @@ function buildQuestAddButton(todoIndex = '', tierIndex = '') {
         button.dataset.todoIndex = todoIndex;
     }
     if(tierIndex !== '') {
-        button.dataset.todoTier = tierIndex;
+        button.dataset.todoTierIndex = tierIndex;
     }
     return button;
 }

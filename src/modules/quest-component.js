@@ -53,15 +53,15 @@ class Questline {
     //adds element to specific tier index
     //it will always be put at front, index 0
     addToTier(tierIndex, questObj) {
-        //when questline content[] is empty
-        if(tierIndex === 0 && this.storage.length === 0) {
-            this.storage.push([]);
-        }
         //checks if tierIndex valid
-        if(tierIndex >= this.storage.length) {
+        if(tierIndex > this.storage.length) {
             return false;
         }
-
+        
+        //tierIndex === this.storage.length: for new quests at end
+        if(tierIndex === 0 && this.storage.length === 0 || tierIndex === this.storage.length) {
+            this.storage.push([]);
+        }
         this.storage[tierIndex].unshift(questObj);
         this.count += 1;
         return this.storage[tierIndex][0]; //for checking purposes
@@ -75,6 +75,9 @@ class Questline {
         }
 
         this.storage[tierIndex].splice(specificIndex, 1); //remove it
+        if(this.storage[tierIndex].length === 0) {
+            this.storage.splice(tierIndex, 1); //if tier empty, remove it
+        }
         this.count -= 1;
         return true;
     }
@@ -117,9 +120,6 @@ class Questline {
 
     //moves element at indices to previous place/tier
     moveIndexUp(tierIndex, specificIndex) {
-        //make sure values are integers first
-        tierIndex = parseInt(tierIndex);
-        specificIndex = parseInt(specificIndex);
 
         //check if tierIndex & specificIndex exist
         if(tierIndex >= this.storage.length || specificIndex >= this.tierSize(tierIndex)) {
@@ -144,7 +144,7 @@ class Questline {
             this.count += 1;
 
             //lastly check if original tier is empty -> if so remove it
-            this.removeTierIfEmpty(tierIndex);
+            this.removeTierIfEmpty(parseInt(tierIndex));
 
             return true;
         }

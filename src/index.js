@@ -8,7 +8,7 @@ const todo = new Todo(localStorage.getItem('todo') || []);
 todo.createNewQuestline('titlesda asdaksjd aksjdaksjd aksdjak  hdfhshdf sjdfhsjdhfjs dfjhsjdfh ', 'description', '#ff0000');
 todo.createNewQuestline('title2', 'description2', '#0000cc');
 todo.atQuestline(0).addToTier(0, new Quest('title', 'hdaksdh', 'colour'));
-todo.atQuestline(0).addToTier(0, new Quest('title2', 'hdaksdh', 'colour'));
+todo.atQuestline(0).addToTier(0, new Quest('title2', 'I am a description kxkdks', 'colour'));
 console.log(todo);
 
 const sideBar = document.querySelector('.side');
@@ -53,7 +53,11 @@ main.addEventListener('click', (e) => {
     }
 });
 
-let currentQuestlineIndex; //index of current edit of questline (used for forms also)
+//both used for forms also
+let currentQuestlineIndex; //index of current edit of questline 
+let currentQuestTier; //index of current tier of quest
+let currentQuestIndex; //index of specific tier of quest, if null --> create new quest
+
 function questlineEvents(target) {
     const targetClass = target.classList;
 
@@ -91,31 +95,36 @@ function questEvents(target) {
     const targetClass = target.classList;
 
     if(targetClass.contains('quest-add-btn')) {
+        currentQuestlineIndex = parseInt(target.dataset.todoIndex);
+        currentQuestTier = parseInt(target.dataset.todoTierIndex);
+        currentQuestIndex = null;
         showQuestModal();
-        console.log('add q');
         return;
     }
 
     const current = findParent(target, 'quest-container'); //contains datasets
-    currentQuestlineIndex = current.dataset.todoIndex
+    currentQuestlineIndex = parseInt(current.dataset.todoIndex);
+    currentQuestTier = parseInt(current.dataset.todoTierIndex);
+    currentQuestIndex = parseInt(current.dataset.todoSpecificIndex);
 
     if(targetClass.contains('move-up-btn')) { 
-        todo.atQuestline(currentQuestlineIndex).moveIndexUp(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        todo.atQuestline(currentQuestlineIndex).moveIndexUp(currentQuestTier, currentQuestIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('move up');
 
     } else if(targetClass.contains('move-down-btn')) {     
-        todo.atQuestline(currentQuestlineIndex).moveIndexDown(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        todo.atQuestline(currentQuestlineIndex).moveIndexDown(currentQuestTier, currentQuestIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('move down');
 
     } else if(targetClass.contains('edit-btn')) {
         closeKebabMenu();
-        showQuestModal();
+        const questNode = todo.atQuestline(currentQuestlineIndex).atTierIndex(currentQuestTier, currentQuestIndex);
+        showQuestModal(questNode.getTitle(), questNode.getDescription());
         console.log('edit');
 
     } else if(targetClass.contains('delete-btn')) {
-        todo.atQuestline(currentQuestlineIndex).removeAtIndices(current.dataset.todoTier, current.dataset.todoSpecificIndex);
+        todo.atQuestline(currentQuestlineIndex).removeAtIndices(currentQuestTier, currentQuestIndex);
         renderQuestlineQuests(todo, currentQuestlineIndex);
         console.log('delete');
 
@@ -140,7 +149,7 @@ questlineForm.addEventListener('click', e => {
             todo.createNewQuestline(values.title, values.description, values.color);
             currentQuestlineIndex = 0;
         } else { 
-            todo.atQuestline(currentQuestlineIndex).updateAll(values.title, values.description, values.color); //add here
+            todo.atQuestline(currentQuestlineIndex).updateAll(values.title, values.description, values.color);
         }
         closeQuestlineModal();
         renderQuestlines(todo.content);
@@ -153,8 +162,14 @@ questForm.addEventListener('click', e => {
         closeQuestModal();
     } else if(e.target.classList.contains('quest-form-submit-btn')) { 
         e.preventDefault();
-        //do stuff
+        const values = getQuestModal();
+        if(currentQuestIndex === null) { //create new quest
+            todo.atQuestline(currentQuestlineIndex).addToTier(parseInt(currentQuestTier), new Quest(values.title, values.description));
+        } else { 
+            
+        }
         closeQuestModal();
+        renderQuestlineQuests(todo, currentQuestlineIndex);
     }
 });
 
